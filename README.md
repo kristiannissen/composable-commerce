@@ -31,31 +31,32 @@ CI, so contract drift is a failed build.
 
 ## Agentic pipeline
 
-Deterministic orchestration (Laravel Artisan commands); agents are stateless
-LLM calls in narrow roles. Verification is locked before code:
+Spec before code, verified twice: Gate A approves intent, Gate B accepts
+behavior. Agents are stateless LLM calls in narrow roles, driven through
+chats and sessions first, scripted into Artisan commands only once a
+step repeats:
 
 ```text
-INSTRUCTIONS.md            human business/technical notes per module
-  -> ai:requirements       Requirements agent (chat) -> requirements.md
-  -> ai:approve            Gate A: human approval (the intent gate)
-  -> ai:gherkin            executable spec, checked (coverage, step
-                           vocabulary, dry-run)
-  -> ai:build              Coder until lint, PHPStan, Pest, arch, Behat,
-                           Infection pass; diagnosis-based attempts,
-                           max 3 Coder runs + 1 escalation
-  -> ai:deliver            card facts verified, spend logged; commit prepared
+INSTRUCTIONS.md            human notes, business and technical, per module
+  -> requirements chat     Vibe Work + .ai/prompts/requirements.md
+  -> Gate A                human approval of requirements.md
+  -> gherkin chat          derived .feature; steps only from .ai/steps.md
+  -> build session         coder agent (Vibe Code / Pi) to green:
+                           lint, Pint, PHPStan, Pest, arch, Behat
   -> Gate B                human acceptance slice; push only on ok
+                           (diagnosis-based attempts, max 3 runs + 1
+                           escalation when stuck)
 
 Periodic:
-  -> manual audit          you + .ai/hardening/CHECKLIST.md (boundaries,
-                           outbox, drift, security)
+  -> manual audit          whole diff + .ai/hardening/CHECKLIST.md
 ```
 
 Spec agents never see code; the coder sees one module folder and contracts
 only; step definitions are hand-written and protected, no LLM writes test
 code; every LLM output is verified by a script or by a human. The same
 failure twice earns a check: conventions grow only from repeated real
-failures.
+failures. Scripts earn their place the same way: an ai:* command exists
+only after the manual step it wraps has repeated.
 
 ## Folder structure
 
@@ -70,10 +71,9 @@ composable-commerce/
 │   ├── steps.md                    # step vocabulary
 │   ├── prompts/                     # one prompt per agent role
 │   ├── vendors/                     # external API facts, the only API source
-│   ├── hardening/
-│   │   ├── CHECKLIST.md             # manual audit + escalation reference
-│   │   └── OPEN.md                  # unresolved advisory findings
-│   └── spend.csv                     # per-module, per-role token spend
+│   └── hardening/
+│       ├── CHECKLIST.md             # manual audit + escalation reference
+│       └── OPEN.md                  # unresolved advisory findings
 ├── tests/
 │   └── Behat/
 │       ├── LaravelContext.php       # base context
@@ -82,7 +82,7 @@ composable-commerce/
 │   └── PULL_REQUEST_TEMPLATE.md     # proof form
 ├── apps/
 │   ├── api/                         # Laravel application
-│   │   ├── app/Console/Commands/    # make:module, ai:* orchestration
+│   │   ├── app/Console/Commands/    # make:module; ai:* when earned
 │   │   ├── config/ai.php            # roles, models, budgets
 │   │   ├── routes/api.php           # /api/health only
 │   │   └── modules/
