@@ -31,6 +31,30 @@ Approval is a commit of the artefact. A command refuses to run if the previous a
 
 Failures become pipeline improvements by one convention line in `.ai/conventions.md`: when the same failure shows up twice (audits and escalations are the record), add a check or a convention line. No learning agent, no lesson files.
 
+## Minimal mode: manual first
+
+The flow above is the destination, not the starting point. Until a manual
+step repeats, you drive it by hand. The roles and their prompts stay the
+same:
+
+- Requirements and Gherkin: a chat with .ai/prompts/<role>.md pasted in
+  plus the inputs the prompt names. Same output, no PHP around it.
+- Coder: a Vibe Code session with AGENTS.md and .ai/prompts/coder.md as
+  instructions. Pi arrives when the run becomes scripted.
+- You are the scripts: citation, coverage and vocabulary checks are your
+  read of the draft. The gates and the slice never change.
+- Automated from day one (the whole protection layer at this scale): pest
+  arch tests on module folders, a .feature-steps-subset-of-steps.md
+  check, one CI workflow running the chain.
+- Deferred until earned: ai:* commands, spend.csv, SYSTEM_MAP.md
+  generation, MODULE fact diffs, Pi worktrees. Reliability stays
+  proportional to consumers: the outbox write exists from the first
+  event; idempotency listeners and the replay/kill test arrive with the
+  first consumer.
+
+Earn rule: automate the step you catch yourself repeating, or the check
+you skipped once out of tiredness. Everything else keeps a human driver.
+
 ## Your time
 
 | Step | What you do | Time |
@@ -142,7 +166,7 @@ Ordered by how much they save.
 - **Stable prefix first.** Guardrail + conventions + template, then the task, so the provider cache stays warm. Keep one model per role so the cache stays warm.
 - **Batched whole-system review.** One manual audit per 3–4 modules instead of one review each; escalation at most once per module.
 - **Hard caps.** `max_tokens` per role, three attempts + one escalation session, a token budget per module (`ai.module_budget_tokens`) after which `ai:build` stops, and prepaid credit without auto top-up.
-- **Measure.** `ai:deliver` sums the JSON usage of agent responses into `.ai/spend.csv` per module and role; the audit reports the trend.
+- **Measure, when scripted.** `ai:deliver` sums the JSON usage of agent responses into `.ai/spend.csv` per module and role; until then the prepaid cap is the budget.
 - **Deterministic where possible.** Approval, card facts, `SYSTEM_MAP.md`, citations, coverage, step vocabulary and budgets are scripts.
 
 ## Models and harness
@@ -188,7 +212,7 @@ $text = Http::withToken(config('ai.api_key'))
     ])->throw()->json('choices.0.message.content');
 ```
 
-The Coder runs through Pi, one git worktree per run:
+Scripted, the Coder runs through Pi, one git worktree per run; in minimal mode the same prompt drives a Vibe Code session you run yourself:
 
 ```php
 Process::path($worktree)->timeout(1800)->run([
@@ -196,15 +220,15 @@ Process::path($worktree)->timeout(1800)->run([
 ])->throw();
 ```
 
-Pi supplies the tool loop (read, edit, run, iterate), a minimal system prompt, scriptable JSON output that doubles as an audit log, and path protection that enforces the Coder's "must not" list at the filesystem. The contract is `process -> JSON -> worktree`, so any OpenAI-compatible harness can fill the slot. Manual work (audit, escalation, scratch sessions) runs in Vibe Code sessions, which share the same account, outside the automated chain.
+Pi supplies the tool loop (read, edit, run, iterate), a minimal system prompt, scriptable JSON output that doubles as an audit log, and path protection that enforces the Coder's "must not" list at the filesystem. The contract is `process -> JSON -> worktree`, so any OpenAI-compatible harness can fill the slot. Manual work (audit, escalation, and in minimal mode the Coder too) runs in Vibe Code sessions, which share the same account, outside the automated chain.
 
 ## Getting started
 
-1. Skeleton by hand (`docs/Setup.md`), `make:module`, Behat, `.githooks`, DB roles and schema grants for the first module.
-2. Write the step library in `tests/Behat/Steps/` and its vocabulary in `.ai/steps.md`.
-3. Review `.ai/conventions.md` and the three prompts.
-4. Write the orchestrator commands: `ai:requirements`, `ai:approve`, `ai:gherkin`, `ai:build`, `ai:deliver`, plus the budget check in CI.
-5. `Catalog` by hand (smallest contract publisher), then `Merchant`, then `Checkout`, then `SalesOrder`, then `Accounting`.
+1. Skeleton by hand (`docs/Setup.md`): Laravel app, `make:module`, Behat, `.githooks`, DB roles and schema grants for the first module, pest arch tests, the steps-subset check, one CI workflow running the chain.
+2. Write the step library in `tests/Behat/Steps/` and its vocabulary in `.ai/steps.md`; review `.ai/conventions.md` and the three prompts.
+3. Run `Catalog` through Minimal mode end to end: INSTRUCTIONS.md -> requirements chat -> Gate A -> Gherkin chat -> build session -> Gate B slice -> commit.
+4. Then `Merchant`, `Checkout`, `SalesOrder`, `Accounting`, same way.
+5. Automate what repeated in steps 3-4: the chats become `ai:requirements` and `ai:gherkin`, the session spawn becomes `ai:build` (Pi), fact collection becomes `ai:deliver`. The full flow above is what this grows into.
 
 ## Design rationale
 
@@ -214,7 +238,7 @@ Pi supplies the tool loop (read, edit, run, iterate), a minimal system prompt, s
 
 **Accepted risks:**
 - **You are the bottleneck.** The pipeline can't outrun the requirements discussion or the acceptance slice; two deliberately blocking gates out of a ten-step flow is the budget for that, not a cure.
-- **Machinery costs before it pays.** Start minimal (Getting started); the audit is manual until it demonstrably repeats itself.
+- **Machinery costs before it pays.** Minimal mode is the default: every automation is earned by a repeated manual step or a skipped check; the audit stays manual until it demonstrably repeats itself.
 - **One provider.** Model availability is one vendor's catalog, and vendors retire models. Mitigated by model-per-role config lines and the audit's spend/model trend check.
 - **One deployment unit.** The pipeline assumes the single Laravel app; extracting a service invalidates some per-module conventions and needs a pipeline decision, not just a deploy change.
 - **Testable isn't everything.** UX quality, performance and search relevance sit outside Behat; Gate B is the only behavioral check, five minutes of it.
