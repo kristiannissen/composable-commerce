@@ -14,6 +14,7 @@ Prepended to every call. Breaking any of these is a failed run.
 
 ## HTTP
 - Routes under api/<slug>, named <slug>.<action>. No new public routes without approval.
+- Request signing: Stripe-style X-Signature header (t=<unix-ts>, v1=HMAC-SHA256 over t + '.' + raw body). Verify with hash_equals, 5-minute window, replay-safe because t is inside the signed payload. Never invent a signing format.
 - HMAC is verified by middleware before any controller runs. Nothing trusts the client.
 - External calls only via .ai/vendors/<system>.md. If it's not documented there, stop.
 
