@@ -42,10 +42,11 @@ INSTRUCTIONS.md            human business/technical notes per module
                            vocabulary, dry-run)
   -> ai:build              Coder until lint, PHPStan, Pest, arch, Behat,
                            Infection pass (3 fails -> 1 escalation)
-  -> ai:deliver            card facts verified, spend logged, commit
+  -> ai:deliver            card facts verified, spend logged; commit prepared
+  -> Gate B                human acceptance slice; push only on ok
 
 Periodic:
-  -> ai:harden             whole-system audit (boundaries, outbox, drift,
+  -> manual audit          you + checklist (boundaries, outbox, drift,
                            security)
 ```
 
