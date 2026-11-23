@@ -37,17 +37,18 @@ LLM calls in narrow roles. Verification is locked before code:
 ```text
 INSTRUCTIONS.md            human business/technical notes per module
   -> ai:requirements       Requirements agent (chat) -> requirements.md
-  -> ai:approve            Gate A: human approval (the only blocking gate)
+  -> ai:approve            Gate A: human approval (the intent gate)
   -> ai:gherkin            executable spec, checked (coverage, step
                            vocabulary, dry-run)
   -> ai:build              Coder until lint, PHPStan, Pest, arch, Behat,
-                           Infection pass (3 fails -> 1 escalation)
+                           Infection pass; diagnosis-based attempts,
+                           max 3 Coder runs + 1 escalation
   -> ai:deliver            card facts verified, spend logged; commit prepared
   -> Gate B                human acceptance slice; push only on ok
 
 Periodic:
-  -> manual audit          you + checklist (boundaries, outbox, drift,
-                           security)
+  -> manual audit          you + .ai/hardening/CHECKLIST.md (boundaries,
+                           outbox, drift, security)
 ```
 
 Spec agents never see code; the coder sees one module folder and contracts
@@ -70,6 +71,7 @@ composable-commerce/
 │   ├── prompts/                     # one prompt per agent role
 │   ├── vendors/                     # external API facts, the only API source
 │   ├── hardening/
+│   │   ├── CHECKLIST.md             # manual audit + escalation reference
 │   │   └── OPEN.md                  # unresolved advisory findings
 │   └── spend.csv                     # per-module, per-role token spend
 ├── tests/
