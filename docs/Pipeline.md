@@ -105,7 +105,7 @@ Automation trigger, revisited at the first audit that finds itself repeating the
 | Consumes / Publishes | Scan of listener type-hints and `event(...)` calls |
 | HTTP routes | `php artisan route:list --name=<slug>. --json` |
 | Tables | Module migrations |
-| Config/env | `config()` / `env()`` keys used in the module |
+| Config/env | `config()` / `env()` keys used in the module |
 
 A mismatch between the card and the generated facts blocks delivery. `SYSTEM_MAP.md` concatenates all cards with the commit hash and is never edited by hand. Agents for the next module load `SYSTEM_MAP.md` plus only the cards and schemas of modules they depend on.
 
@@ -144,7 +144,6 @@ Ordered by how much they save.
 - **Hard caps.** `max_tokens` per role, three attempts + one escalation session, a token budget per module (`ai.module_budget_tokens`) after which `ai:build` stops, and prepaid credit without auto top-up.
 - **Measure.** `ai:deliver` sums the JSON usage of agent responses into `.ai/spend.csv` per module and role; the audit reports the trend.
 - **Deterministic where possible.** Approval, card facts, `SYSTEM_MAP.md`, citations, coverage, step vocabulary and budgets are scripts.
-- **Lessons, not history** removed: at this scale you *are* the learning loop; the twice-failed-failure convention line is the mechanism.
 
 ## Models and harness
 
