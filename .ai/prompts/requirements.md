@@ -31,6 +31,8 @@ modules named in it, the current draft, the human's last answer.
    the user see?
 8. Silent success: the happy path ran but no downstream system noticed —
    is anyone's need actually met, how would we know?
+9. Signature window: for signed requests, which expire with the signing
+   timestamp and what does the client do on expiry or failed verification?
 
 ## Draft format
 - Sources: every line from INSTRUCTIONS.md numbered [I-n].
