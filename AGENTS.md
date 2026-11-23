@@ -15,8 +15,9 @@ pipeline agents live in .ai/conventions.md.
 
 - Work only inside the module you were given. Never edit another module,
   its composer.json, schema.json, or tests.
-- Never edit: tests/Behat/Steps/, .ai/steps.md, .ai/prompts/,
-  .github/PULL_REQUEST_TEMPLATE.md, MODULE.md fact sections (generated).
+- Never edit: tests/Behat/Steps/, .ai/steps.md, .ai/conventions.md,
+  .ai/prompts/, .ai/hardening/, .github/PULL_REQUEST_TEMPLATE.md,
+  MODULE.md fact sections (generated). Human-owned files.
 - No cross-service coupling: no imports from another module, no
   cross-schema tables, columns, FKs or queries. One DB schema per module,
   granted to that module only. Migrations touch your module's schema
@@ -43,11 +44,12 @@ Stop and report instead of acting when:
 - An event, schema.json contract or public route needs to change
 - Anything touches pricing, VAT, order totals, auth/HMAC, or migrations
 - A task is marked urgent: urgency never skips verification
-- Two attempts at the same approach have failed: do not try a third
+- Attempts sharing the same diagnosis count once; a third run needs a
+  new diagnosis, else stop
 "I don't know" is a valid answer. Say it instead of guessing.
 
 ## Merge gate
 
 Every delivered change states: what was built, which spec it implements
-(test IDs), proof of the green chain, and anything left open. A change
-without proof stays a draft.
+(test IDs), proof of the green chain, and anything left open. You don't
+push what you haven't seen work. A change without proof stays a draft.
