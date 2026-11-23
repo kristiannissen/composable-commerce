@@ -2,8 +2,8 @@
 
 One system, one document: the services, their contracts, the data rules,
 the storefront's role, and how the pieces connect. Implementation detail
-for the storefront lives in [Frontend.md](Frontend.md), the build process
-in [Pipeline.md](Pipeline.md).
+for the storefront will live in Frontend.md (planned); the build process
+is in [Pipeline.md](Pipeline.md).
 
 ## Shape
 
@@ -90,8 +90,8 @@ prerendered; cart, checkout, merchant-specific and net-price pages
 render per request. Net prices never appear in HTML served to anonymous
 visitors. All traffic goes through one public gateway with HMAC-signed
 requests; the storefront never addresses a service directly. URL
-patterns, CMS, analytics and UX baseline: see
-[Frontend.md](Frontend.md).
+patterns, CMS, analytics and UX baseline wait for
+Frontend.md (planned).
 
 ## Testing
 
