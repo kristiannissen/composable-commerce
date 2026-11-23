@@ -15,7 +15,9 @@ modules/<Module>/INSTRUCTIONS.md                         ← you
   → php artisan ai:build <Module>                  Coder (Pi) until lint, PHPStan, Pest, arch, Behat, Infection pass;
                                                    every new event has an outbox write, every listener a dedup check.
                                                    A module touching the event bus runs the queue-driver Behat once.
-                                                   3 failed attempts → one Hardening escalation
+                                                   attempts sharing a diagnosis count once; a third run needs
+                                                   a new diagnosis, else Hardening escalation. Max per module:
+                                                   three Coder runs + one escalated attempt.
   → php artisan ai:deliver <Module>                card facts checked, SYSTEM_MAP.md regenerated, spend logged, commit
 
 Periodic (every 3–4 delivered modules, or weekly):
