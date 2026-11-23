@@ -74,13 +74,13 @@ composable-commerce/
 │   └── hardening/
 │       ├── CHECKLIST.md             # manual audit + escalation reference
 │       └── OPEN.md                  # unresolved advisory findings
-├── tests/
+├── tests/                           # planned (first build session)
 │   └── Behat/
 │       ├── LaravelContext.php       # base context
 │       └── Steps/                   # hand-written step library (protected)
-├── .github/
+├── .github/                        # planned (first build session)
 │   └── PULL_REQUEST_TEMPLATE.md     # proof form
-├── apps/
+├── apps/                            # planned (first build session)
 │   ├── api/                         # Laravel application
 │   │   ├── app/Console/Commands/    # make:module; ai:* when earned
 │   │   ├── config/ai.php            # roles, models, budgets
@@ -98,7 +98,7 @@ composable-commerce/
 │   │           └── Tests/{Unit,Behat}/
 │   └── web/                         # headless storefront
 │       └── src/types/              # generated from schema.json in CI
-└── .githooks/
+└── .githooks/                       # planned (first build session)
 ```
 
 ## Status
