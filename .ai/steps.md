@@ -26,6 +26,8 @@ When:
 - When event :event is redelivered
 - When I call :method api/:path with body :json (signed, merchant :cvr)
 - When I call :method api/:path anonymously
+- When I call :method api/:path with body :json (signed, expired)
+- When I call :method api/:path with body :json (invalid signature)
 
 Then:
 - Then the last response status is :status
