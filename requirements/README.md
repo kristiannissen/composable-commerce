@@ -15,10 +15,11 @@ Status: every file is a draft until approved at Gate A. Nothing here is
 implemented before approval.
 
 Naming: the search capability is called **the search service** in all
-requirement files. No vendor names; a replacement engine must satisfy the
-same text unchanged.
+requirement files. No vendor names; a replacement engine must satisfy
+the same text unchanged.
 
 | Feature | Frontend | Backend | Status |
 |---|---|---|---|
 | PLP | [frontend/plp.md](frontend/plp.md) | [backend/plp.md](backend/plp.md) | draft |
+| PDP | [frontend/pdp.md](frontend/pdp.md) | [backend/pdp.md](backend/pdp.md) | draft |
 | Product schema | shared: [product-schema/](product-schema/README.md) | | draft |
