@@ -1,0 +1,203 @@
+{
+  "@context": "https://schema.org",
+  "@type": "ProductGroup",
+  "@id": "https://example.com/p/t-shirt-classic#group",
+  "name": "Classic Cotton T-Shirt",
+  "description": "Organic cotton tee, unisex fit.",
+  "brand": {
+    "@type": "Brand",
+    "name": "ExampleBrand"
+  },
+  "url": "https://example.com/p/t-shirt-classic",
+  "image": "https://example.com/img/t-shirt-classic.jpg",
+  "productGroupID": "TSHIRT-CLASSIC",
+  "variesBy": [
+    "https://schema.org/color",
+    "https://schema.org/size"
+  ],
+  "manufacturer": {
+    "@type": "Organization",
+    "@id": "https://example.com/org/acme#id",
+    "name": "ACME Textiles ApS",
+    "vatID": "DK12345678"
+  },
+  "countryOfOrigin": {
+    "@type": "Country",
+    "name": "Portugal"
+  },
+  "material": [
+    {
+      "@type": "ProductMaterial",
+      "name": "organic cotton"
+    }
+  ],
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "materialCompositionFullText",
+      "description": "Fibre composition as required for textile labelling",
+      "value": "95% organic cotton, 5% elastane"
+    },
+    {
+      "@type": "PropertyValue",
+      "propertyID": "https://example.com/props/material",
+      "name": "materialComposition",
+      "value": [
+        {
+          "@type": "PropertyValue",
+          "name": "organic cotton",
+          "value": 95,
+          "unitCode": "P1"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "elastane",
+          "value": 5,
+          "unitCode": "P1"
+        }
+      ],
+      "description": "P1 = percent; names follow EU textile fibre nomenclature (Reg. 1007/2011)"
+    }
+  ],
+  "hasWarrantyPromise": [
+    {
+      "@type": "WarrantyPromise",
+      "@id": "https://example.com/p/t-shirt-classic#legal-guarantee",
+      "name": "EU legal guarantee of conformity",
+      "description": "2-year legal guarantee under Directive (EU) 2019/771: repair, replacement or price reduction for non-conform goods; burden of proof on seller for the first 12 months.",
+      "duration": {
+        "@type": "QuantitativeValue",
+        "value": 2,
+        "unitCode": "ANN"
+      },
+      "warrantyScope": {
+        "@type": "WarrantyScope",
+        "name": "Conformity with contract",
+        "url": "https://example.com/legal-guarantee"
+      }
+    },
+    {
+      "@type": "WarrantyPromise",
+      "@id": "https://example.com/p/t-shirt-classic#commercial-guarantee",
+      "name": "Extended commercial guarantee",
+      "description": "Optional extended guarantee, terms in the guarantee statement delivered with the product.",
+      "duration": {
+        "@type": "QuantitativeValue",
+        "value": 24,
+        "unitCode": "MON"
+      },
+      "warrantyScope": {
+        "@type": "WarrantyScope",
+        "name": "Material and manufacturing defects",
+        "url": "https://example.com/guarantee-terms"
+      }
+    }
+  ],
+  "subjectOf": {
+    "@type": "DigitalDocument",
+    "@id": "https://dpp.example.com/passports/tshirt-classic#dpp",
+    "name": "Digital Product Passport",
+    "description": "ESPR (Regulation (EU) 2024/1781) Digital Product Passport for this product group.",
+    "url": "https://dpp.example.com/passports/tshirt-classic",
+    "encodingFormat": "application/ld+json",
+    "inLanguage": "en",
+    "additionalProperty": [
+      {
+        "@type": "PropertyValue",
+        "name": "dppUniqueIdentifier",
+        "value": "URN:UVI:01:ACME:TSHIRT-CLASSIC"
+      },
+      {
+        "@type": "PropertyValue",
+        "name": "dppStandard",
+        "value": "EN 18219:2026 (unique identifiers); EN 18222:2026 (APIs)"
+      },
+      {
+        "@type": "PropertyValue",
+        "name": "dppRegistry",
+        "value": "https://ec.europa.eu/dpp-registry"
+      },
+      {
+        "@type": "PropertyValue",
+        "name": "dataProviderClass",
+        "value": "manufacturer"
+      }
+    ]
+  },
+  "hasVariant": [
+    {
+      "@type": "Product",
+      "@id": "https://example.com/p/t-shirt-classic#red-m",
+      "sku": "TSHIRT-CLASSIC-RED-M",
+      "gtin13": "5901234123457",
+      "color": "Red",
+      "size": "M",
+      "isVariantOf": {
+        "@id": "https://example.com/p/t-shirt-classic#group"
+      },
+      "image": "https://example.com/img/t-shirt-classic-red.jpg",
+      "offers": {
+        "@type": "Offer",
+        "url": "https://example.com/p/t-shirt-classic?color=red&size=m",
+        "price": 149,
+        "priceCurrency": "DKK",
+        "availability": "https://schema.org/InStock",
+        "itemCondition": "https://schema.org/NewCondition"
+      }
+    },
+    {
+      "@type": "Product",
+      "@id": "https://example.com/p/t-shirt-classic#red-s",
+      "sku": "TSHIRT-CLASSIC-RED-S",
+      "color": "Red",
+      "size": "S",
+      "isVariantOf": {
+        "@id": "https://example.com/p/t-shirt-classic#group"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": 149,
+        "priceCurrency": "DKK",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    {
+      "@type": "Product",
+      "@id": "https://example.com/p/t-shirt-classic#blue-m",
+      "sku": "TSHIRT-CLASSIC-BLUE-M",
+      "color": "Blue",
+      "size": "M",
+      "isVariantOf": {
+        "@id": "https://example.com/p/t-shirt-classic#group"
+      },
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "https://example.com/props/material",
+          "name": "materialComposition",
+          "value": [
+            {
+              "@type": "PropertyValue",
+              "name": "organic cotton",
+              "value": 92,
+              "unitCode": "P1"
+            },
+            {
+              "@type": "PropertyValue",
+              "name": "elastane",
+              "value": 8,
+              "unitCode": "P1"
+            }
+          ],
+          "description": "Overrides group-level composition for this variant"
+        }
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": 149,
+        "priceCurrency": "DKK",
+        "availability": "https://schema.org/OutOfStock"
+      }
+    }
+  ]
+}
