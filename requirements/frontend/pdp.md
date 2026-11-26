@@ -65,12 +65,12 @@ them.
 - FR-11: Delivery is presented as an estimated date or date range
   ("Delivery December 3" / "December 3-5"), never as a bare speed label
   ("2 business days") the user must convert. Estimates come from the
-  PDP query (backend BR-8) computed server-side in the viewer's
+  PDP query (backend BR-6) computed server-side in the viewer's
   timezone; the page performs no timezone math.
 - FR-12: When a same-day-dispatch cutoff applies, the cutoff renders as
   a live countdown ("Order within 2 h 15 min: ships today"), computed
   from the server-provided cutoff instant and the viewer's timezone
-  (backend BR-9). A static cutoff in another timezone, which forces
+  (backend BR-8). A static cutoff in another timezone, which forces
   mental conversion, is a defect.
 - FR-13: Estimates state their scope: advisory at the PDP, revalidated
   in the cart and at checkout (cart/checkout feature files own that
@@ -134,8 +134,8 @@ them.
 
 ## Open questions
 
-1. Variant URL shape: path segments, query param, or hash (affects FR-1
-   and BR-14 structured data links)?
+1. Variant URL shape: path segments, query param, or hash (affects FR-1,
+   FR-21 and backend BR-5 structured data links)?
 2. Can anonymous visitors add to cart (price-less cart line), or does
    add-to-cart require an authenticated merchant session (FR-17)?
 3. Is lead-time display per variant needed beyond in/out of stock, and
